@@ -1,0 +1,21 @@
+import board
+import displayio
+import terminalio
+import time
+import random
+from adafruit_matrixportal.matrix import Matrix
+import adafruit_imageload
+from adafruit_display_text import label
+
+displayio.release_displays()
+
+matrix = Matrix(width=64, height=32)
+display = matrix.display
+
+pokemon_data = [
+    {"number": "No. 004", "name": "Charmander", "description": "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.", "image": "/charmander.bmp"},
+    {"number": "No. 001", "name": "Bulbasaur", "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.", "image": "/bulbasaur.bmp"},
+    {"number": "No. 007", "name": "Squirtle", "description": "After birth, its back swells and hardens into a shell. It powerfully sprays foam from its mouth.", "image": "/squirtle.bmp"},
+]
+
+def display_pokemon(pokemon):
