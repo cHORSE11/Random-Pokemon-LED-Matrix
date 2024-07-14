@@ -1,0 +1,48 @@
+import board
+import displayio
+import terminalio
+import time
+from adafruit_matrixportal.matrix import Matrix
+import adafruit_imageload
+from adafruit_display_text import label
+
+displayio.release_dispplays()
+
+matrix = Matrix(width=64, height=32)
+display = matrix.display
+
+charmander_bitmap, charmander_palette = adafruit_imageload.load("/charmander.bmp",
+                                                                bitmap=displayio.Bitmap,
+                                                                palette=displayio.Palette)
+
+tile_grid = displayio.TileGrid(pokemon_bitmap, pixel_shader=pokemon_palette, x=0, y=0)
+
+group = displayio.Group()
+
+group.append(tile_grid)
+
+pokemon_number = label.Label(terminalio.FONT, text="No. 004", color= 0xFFFFFF, x=34, y=5)
+pokemon_name = label.Label(terminalio.FONT, text ="Charmander", color= 0xFFFFFF, x=34, y=15)
+
+group.append(pokemon_number)
+group.append(pokemon_name)
+
+pokemon_description_text = "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon."
+pokemon_description = label.Label(terminal.io.FONT, text=pokemon_description_text, color=0xFFFFFF, x=34, y=25)
+
+group.append(pokemnon_description)
+
+diplay.show(group)
+
+def scroll_text(label, text, start_pos, end_pos, speed):
+  While True:
+    for pos in range(start_pos, end_pos, -1):
+      label.x = pos
+        time.sleep(speed)
+
+import threading 
+scroll_thread = threading.Thread(targt=scroll_text, args=(pokemon_description, pokemon_description_text, 34, -len(pokenon_description_text)*6, 0.1))
+scroll_thread.start
+
+while True:
+  pass
