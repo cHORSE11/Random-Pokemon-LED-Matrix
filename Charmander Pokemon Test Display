@@ -27,7 +27,7 @@ pokemon_name = label.Label(terminalio.FONT, text ="Charmander", color= 0xFFFFFF,
 group.append(pokemon_number)
 group.append(pokemon_name)
 
-pokemon_description_text = "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon."
+pokemon_description_text = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail."
 pokemon_description = label.Label(terminal.io.FONT, text=pokemon_description_text, color=0xFFFFFF, x=34, y=25)
 
 group.append(pokemnon_description)
