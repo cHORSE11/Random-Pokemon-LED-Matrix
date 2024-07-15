@@ -12,10 +12,51 @@ displayio.release_displays()
 matrix = Matrix(width=64, height=32)
 display = matrix.display
 
+# More Pokemon Will Be Added :D
 pokemon_data = [
     {"number": "No. 004", "name": "Charmander", "description": "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.", "image": "/charmander.bmp"},
     {"number": "No. 001", "name": "Bulbasaur", "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.", "image": "/bulbasaur.bmp"},
     {"number": "No. 007", "name": "Squirtle", "description": "After birth, its back swells and hardens into a shell. It powerfully sprays foam from its mouth.", "image": "/squirtle.bmp"},
 ]
 
+
+
 def display_pokemon(pokemon):
+
+bitmap, palette = adafruit_imageload.load(pokemon["image"],
+                                              bitmap=displayio.Bitmap,
+                                              palette=displayio.Palette)
+tile_grid = displayio.TileGrid(bitmap, pixel_shader=palette, x=0, y=0)
+
+pokemon_number = label.Label(terminalio.FONT, text=pokemon["number"], color=0xFFFFFF, x=34, y=5)
+pokemon_name = label.Label(terminalio.FONT, text=pokemon["name"], color=0xFFFFFF, x=34, y=15)
+pokemon_description = label.Label(terminalio.FONT, text=pokemon["description"], color=0xFFFFFF, x=34, y=25)
+
+group = displayio.Group()
+group.append(tile_grid)
+group.append(pokemon_number)
+group.append(pokemon_name)
+group.append(pokemon_description)
+
+display.show(group)
+
+def scroll_text(label, text, start_pos, end_pos, speed):
+    while True:
+        for pos in range(start_pos, end_pos, -1):
+            label.x = pos
+            time.sleep(speed)
+        for pos in range(end_pos, start_pos, 1):
+            label.x = pos
+            time.sleep(speed)
+
+while True:
+    current_pokemon = random.choice(pokemon_data)
+    display_pokemon(current_pokemon)
+    description_label = display[0].children[3]  # Assuming the description label is the 4th child in the group
+    scroll_thread = threading.Thread(target=scroll_text, args=(description_label, current_pokemon["description"], 34, -len(current_pokemon["description"])*6, 0.1))
+    scroll_thread.start()
+
+ time.sleep(120)
+
+
+    
